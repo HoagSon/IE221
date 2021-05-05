@@ -4,6 +4,4 @@ from django.http import HttpResponse
 
 def index(Request):
     response = HttpResponse()
-    response.writelines("<h1>xin chao</h1>")
-    response.write("Day la app home")
     return response
