@@ -1,10 +1,10 @@
 # IE221
 ## Installation
-### Django
+### *Django
 ```bash
 pip install django==2.2
 ```
-### Pycharm
+### *Pycharm
 https://www.jetbrains.com/pycharm/
 ## Setup
 ```bash
