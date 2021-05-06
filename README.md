@@ -1,2 +1,3 @@
 # IE221
-# setup
+## Setup
+python manage.py runserver
