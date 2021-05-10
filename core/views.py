@@ -5,3 +5,8 @@ from django.views import View
 class HomeView(View):
     def get(self, request):
         return render(request, 'Homepage/index.html')
+
+class ContactView(View):
+    def get(self, request):
+        return render(request, 'Homepage/contact.html')
+
