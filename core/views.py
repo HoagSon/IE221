@@ -10,3 +10,6 @@ class ContactView(View):
     def get(self, request):
         return render(request, 'Homepage/contact.html')
 
+class ProductView(View):
+    def get(self, request):
+        return render(request, 'Homepage/products.html')
