@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import View
+from .models import *
 # Create your views here.
 
 class HomeView(View):
@@ -12,4 +13,6 @@ class ContactView(View):
 
 class ProductView(View):
     def get(self, request):
-        return render(request, 'Homepage/products.html')
+        products = Product.objects.all()
+        context = {'products':products}
+        return render(request, 'Homepage/products.html', context)
