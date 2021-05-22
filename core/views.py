@@ -16,3 +16,7 @@ class ProductView(View):
         products = Product.objects.all()
         context = {'products':products}
         return render(request, 'Homepage/products.html', context)
+class CartView(View):
+    def get(self, request):
+
+        return render(request, 'Homepage/cart.html')

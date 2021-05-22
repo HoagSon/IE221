@@ -1,0 +1,55 @@
+{% extends 'Homepage/base.html' %}
+{% load static %}
+{% block cssblock %}
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>Nhóm 13 IE221</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'homepage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<!--
+
+TemplateMo 546 Sixteen Clothing
+
+https://templatemo.com/tm-546-sixteen-clothing
+
+-->
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'homepage/assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'homepage/assets/css/templatemo-sixteen.css' %}">
+    <link rel="stylesheet" href="{% static 'homepage/assets/css/owl.css' %}">
+{% endblock %}
+{% block content %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="box-element">
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<a  class="btn btn-outline-dark" href="">&#x2190; Continue Shopping</a>
+
+				<br>
+				<br>
+				<table class="table">
+					<tr>
+						<th><h5>Items: <strong>3</strong></h5></th>
+						<th><h5>Total:<strong> $42</strong></h5></th>
+						<th>
+							<a  style="float:right; margin:5px;" class="btn btn-success" href="">Checkout</a>
+						</th>
+					</tr>
+				</table>
+
+			</div>
+
+			<br>
+			<div class="box-element">
+
+			</div>
+		</div>
+	</div>
+{% endblock content %}
