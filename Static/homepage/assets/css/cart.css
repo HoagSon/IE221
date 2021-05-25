@@ -2,11 +2,18 @@
 	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
 	background-color: #fff;
 	border-radius: 5px;
-	padding: 70px;
-
+	padding: 50px;
+	margin-top: 10%;
+}
+.box-element1{
+	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+	background-color: #fff;
+	border-radius: 5px;
+	padding:30px;
 }
 .row{
-	position: center;
+	margin-left: 120px;
+	margin-right: 120px;
 }
 
  .col-lg-12{
