@@ -41,3 +41,11 @@ class CheckoutView(View):
 
         context = {'items': items, 'order': order}
         return render(request, 'Homepage/checkout.html', context)
+
+class LoginPage(View):
+    def get(self, request):
+        render(request, 'Homepage/login.html')
+
+class RegisterPage(View):
+    def get(self, request):
+        render(request, 'Homepage/register.html')
