@@ -107,15 +107,12 @@ https://templatemo.com/tm-546-sixteen-clothing
                     {% for product in products %}
                     <div class="col-lg-4 col-md-4 all des">
                       <div class="product-item">
-                        <a href="#"><img src="{{product.imageURL}}" alt=""></a>
-                        <div class="down-content">
-                          <a href="#"><h4>{{product.name}}</h4></a>
-                          <h6>${{product.price|floatformat}}</h6>
-                          <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                          <ul class="stars">
-                            <button style="color: #ffffff ;background-color: #ff4d4d;border: 1px solid #cc0000; border-radius: 6px" >Add to Cart</button>
-                          </ul>
-                          <span>Reviews (12)</span>
+                        <img class="thumbnail" src="{{product.image.url}}">
+                        <div class="box-element product">
+                            <h6 style="margin-left: 25px"><strong>{{product.name}}</strong></h6>
+                            <hr>
+                            <button class="btn btn-outline-secondary" style="margin-left: 25px; margin-bottom: 15px">Add to Cart</button>
+                            <h6 style="display: inline-block; float: right; margin-right: 25px; margin-top: 5px"><strong>đ{{product.price}}</strong></h6>
                         </div>
                       </div>
                     </div>
@@ -125,8 +122,8 @@ https://templatemo.com/tm-546-sixteen-clothing
           </div>
           <div class="col-md-12">
             <ul class="pages">
-              <li><a href="#">1</a></li>
-              <li class="active"><a href="#">2</a></li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
               <li><a href="#">3</a></li>
               <li><a href="#">4</a></li>
               <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
