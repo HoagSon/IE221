@@ -14,7 +14,7 @@ class ContactView(View):
 class ProductView(View):
     def get(self, request):
         products = Product.objects.all()
-        context = {'products':products}
+        context = {'products': products}
         return render(request, 'Homepage/products.html', context)
 class CartView(View):
     def get(self, request):
@@ -44,8 +44,8 @@ class CheckoutView(View):
 
 class LoginPage(View):
     def get(self, request):
-        render(request, 'Homepage/login.html')
+        return render(request, 'Homepage/login.html')
 
 class RegisterPage(View):
     def get(self, request):
-        render(request, 'Homepage/register.html')
+        return render(request, 'Homepage/register.html')
