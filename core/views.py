@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from django.views import View
 from .models import *
 # Create your views here.
@@ -49,3 +50,6 @@ class LoginPage(View):
 class RegisterPage(View):
     def get(self, request):
         return render(request, 'Homepage/register.html')
+
+def updateItem(request):
+    return JsonResponse('Item was added', safe=False)
