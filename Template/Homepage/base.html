@@ -8,6 +8,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <script type = "text/javascript">
+        var user = "{{request.user}}"
+
+        function getToken(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+        }
+        var csrftoken = getToken('csrftoken');
+    </script>
+
+
 
 
       {% block cssblock %}
@@ -20,8 +42,9 @@
     {% include 'Homepage/footer.html'%}
 
 
-      {% block jsblock %}
-      {% endblock %}
+    {% block jsblock %}
+        <script src="{% static 'homepage/assets/js/cart.js' %}" ></script>
+    {% endblock %}
   </body>
 
 </html>

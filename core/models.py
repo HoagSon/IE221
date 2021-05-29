@@ -13,8 +13,7 @@ class Customer(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
-    price = models.FloatField()
-    digital = models.BooleanField(default=False, null=True, blank=False)
+    price = models.IntegerField()
     image = models.ImageField(null=True, blank=True)
     def __str__(self):
         return self.name
@@ -34,6 +33,7 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.id)
+
 
     def get_cart_total(self):
         orderitems = self.orderitem_set.all()
@@ -61,6 +61,7 @@ class ShippingAddress(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     address = models.CharField(max_length=200, null=True)
     city = models.CharField(max_length=200, null=True)
+    phone = models.CharField(max_length=200, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

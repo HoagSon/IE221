@@ -32,7 +32,7 @@ https://templatemo.com/tm-546-sixteen-clothing
 				<table class="table">
 					<tr>
 						<th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
-						<th><h5>Total:<strong> ${{order.get_cart_total|floatformat:2}}</strong></h5></th>
+						<th><h5>Total:<strong> {{order.get_cart_total}}đ</strong></h5></th>
 						<th>
 							<a  style="float:right; color: #ffffff ;margin:5px;background-color: #ff4d4d;border-color: #cc0000" class="btn btn-success" href="/Checkout">Checkout</a>
 						</th>
@@ -55,19 +55,19 @@ https://templatemo.com/tm-546-sixteen-clothing
 				<div class="cart-row">
 					<div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
 					<div style="flex:2"><p>{{item.product.name}}</p></div>
-					<div style="flex:1"><p>${{item.product.price|floatformat:2}}</p></div>
+					<div style="flex:1"><p>{{item.product.price}}đ</p></div>
 					<div style="flex:1">
 						<p class="quantity">{{item.quantity}}</p>
 						<div class="quantity">
-							<img data-product="" data-action="add" class="chg-quantity update-cart" src="{% static  'homepage/assets/images/arrow-down.png' %}">
+							<img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update_cart" src="{% static  'homepage/assets/images/arrow-up.png' %}">
 
-							<img data-product="" data-action="remove" class="chg-quantity update-cart" src="{% static  'homepage/assets/images/arrow-up.png' %}">
+							<img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update_cart" src="{% static  'homepage/assets/images/arrow-down.png' %}">
 						</div>
 					</div>
-					<div style="flex:1"><p>${{item.get_total|floatformat:2}}</p></div>
+					<div style="flex:1"><p>{{item.get_total}}đ</p></div>
 				</div>
 				{% endfor %}
 			</div>
 		</div>
 	</div>
-{% endblock content %}
+{% endblock%}

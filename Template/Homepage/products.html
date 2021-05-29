@@ -111,7 +111,7 @@ https://templatemo.com/tm-546-sixteen-clothing
                         <div class="box-element product">
                             <h6 style="margin-left: 25px"><strong>{{product.name}}</strong></h6>
                             <hr>
-                            <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn add" style="margin-left: 25px; margin-bottom: 15px">Add to Cart</button>
+                            <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update_cart" style="margin-left: 25px; margin-bottom: 15px">Add to Cart</button>
                             <h6 style="display: inline-block; float: right; margin-right: 25px; margin-top: 5px"><strong>đ{{product.price}}</strong></h6>
                         </div>
                       </div>
@@ -165,26 +165,7 @@ https://templatemo.com/tm-546-sixteen-clothing
     <script src="{% static 'homepage/assets/js/accordions.js' %}"></script>
 
     <script src="{% static 'homepage/assets/js/cart.js' %}" ></script>
-    <script type = "text/javascript">
-        var user = "{{request.user}}"
 
-        function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-        }
-        const csrftoken = getCookie('csrftoken');
-    </script>
     <script language = "text/Javascript">
       cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
       function clearField(t){                   //declaring the array outside of the
