@@ -136,17 +136,14 @@ def registerPage(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
+            user = form.save()
             username = form.cleaned_data.get('username')
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password1')
-            users = User.objects.create_superuser(
-                username=username,
-                email=email,
-                password=password
+            Customer.objects.create(
+                user=user,
+                name=username,
+                email=form.cleaned_data.get('email')
             )
-            #customer = Customer.objects.get_or_create(user=username, name=username,email=email)
-            user = form.cleaned_data.get('username')
-            messages.success(request, 'Account was created for ' + user)
+            messages.success(request, 'Account was created for ' + username)
             return redirect('login')
     context = {'form': form}
     return render(request, 'Homepage/register.html', context)
