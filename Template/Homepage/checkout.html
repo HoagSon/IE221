@@ -99,7 +99,7 @@ https://templatemo.com/tm-546-sixteen-clothing
 		shippingInfo.phone = form.phone.value
 		userFormData.name = form.name.value
 		userFormData.email = form.email.value
-		const url = "/process_order/"
+		const url = '/process_order/'
 		fetch(url, {
 			method:'POST',
 			headers:{
@@ -113,6 +113,8 @@ https://templatemo.com/tm-546-sixteen-clothing
 		.then((data) => {
 			console.log('Success:', data);
 			alert('Transaction completed');
+			cart = {}
+			document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
 			window.location.href = "{% url 'product' %}"
 		})
 	}

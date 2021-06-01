@@ -7,6 +7,7 @@ import datetime
 from .forms import CreateUserForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from .utils import cookieCart
 from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
@@ -18,9 +19,8 @@ class HomeView(View):
             items = order.orderitem_set.all()
             cartItems = order.get_cart_items
         else:
-            items = []
-            order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': False}
-            cartItems = order['get_cart_items']
+            cookieData = cookieCart(request)
+            cartItems = cookieData['cartItems']
         context = {'cartItems': cartItems}
         return render(request, 'Homepage/index.html', context)
 
@@ -32,9 +32,8 @@ class ContactView(View):
             items = order.orderitem_set.all()
             cartItems = order.get_cart_items
         else:
-            items = []
-            order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': False}
-            cartItems = order['get_cart_items']
+            cookieData = cookieCart(request)
+            cartItems = cookieData['cartItems']
         context = {'cartItems': cartItems}
         return render(request, 'Homepage/contact.html', context)
 
@@ -46,10 +45,8 @@ class ProductView(View):
             items = order.orderitem_set.all()
             cartItems = order.get_cart_items
         else:
-            items = []
-            order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': False}
-            cartItems = order['get_cart_items']
-
+            cookieData = cookieCart(request)
+            cartItems = cookieData['cartItems']
         products = Product.objects.all()
         context = {'products': products, 'cartItems': cartItems}
         return render(request, 'Homepage/products.html', context)
@@ -61,10 +58,10 @@ class CartView(View):
             items = order.orderitem_set.all()
             cartItems = order.get_cart_items
         else:
-            items = []
-            order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': False}
-            cartItems = order['get_cart_items']
-
+            cookieData = cookieCart(request)
+            cartItems = cookieData['cartItems']
+            order = cookieData['order']
+            items = cookieData['items']
         context = {'items': items, 'order': order, 'cartItems': cartItems}
         return render(request, 'Homepage/cart.html', context)
 
@@ -76,9 +73,10 @@ class CheckoutView(View):
             items = order.orderitem_set.all()
             cartItems = order.get_cart_items
         else:
-            items = []
-            order = {'get_cart_total': 0, 'get_cart_items': 0}
-            cartItems = order['get_cart_items']
+            cookieData = cookieCart(request)
+            cartItems = cookieData['cartItems']
+            order = cookieData['order']
+            items = cookieData['items']
         context = {'items': items, 'order': order, 'cartItems': cartItems}
         return render(request, 'Homepage/checkout.html', context)
 
@@ -112,23 +110,47 @@ def processOrder(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        total = data['form']['total']
-        order.transaction_id = transaction_id
-        order.complete = True
-
-        if total == order.get_cart_total:
-            order.complete = True
-        order.save()
-        ShippingAddress.objects.create(
-            customer=customer,
-            order=order,
-            address=data['shipping']['address'],
-            city=data['shipping']['city'],
-            phone=data['shipping']['phone']
-        )
-
     else:
         print('User not logged in...')
+        print('COOKIES:', request.COOKIES)
+        name = data['form']['name']
+        email = data['form']['email']
+
+        cookieData = cookieCart(request)
+        items = cookieData['items']
+        customer, created = Customer.objects.get_or_create(
+            email=email,
+        )
+        customer.name = name
+        customer.save()
+
+        order = Order.objects.create(
+            customer=customer,
+            complete=False,
+        )
+
+        for item in items:
+            print((item))
+            product = Product.objects.get(id=item['product']['id'])
+            orderItem = OrderItem.objects.create(
+                product=product,
+                order=order,
+                quantity=item['quantity']
+            )
+    total = data['form']['total']
+    order.transaction_id = transaction_id
+    order.complete = True
+
+    if total == order.get_cart_total:
+        order.complete = True
+    order.save()
+    ShippingAddress.objects.create(
+        customer=customer,
+        order=order,
+        address=data['shipping']['address'],
+        city=data['shipping']['city'],
+        phone=data['shipping']['phone']
+    )
     return JsonResponse('Payment complete', safe=False)
 
 def registerPage(request):
@@ -149,15 +171,22 @@ def registerPage(request):
     return render(request, 'Homepage/register.html', context)
 
 def loginPage(request):
-    context = {}
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('index')
-        else:
-            messages.info(request, 'Username or password is incorrect')
-            return render(request, 'Homepage/login.html', context)
-    return render(request, 'Homepage/login.html', context)
+    if request.user.is_authenticated:
+        return redirect('index')
+    else:
+        context = {}
+        if request.method == "POST":
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                messages.info(request, 'Username or password is incorrect')
+                return render(request, 'Homepage/login.html', context)
+        return render(request, 'Homepage/login.html', context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
